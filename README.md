@@ -14,123 +14,76 @@
 To install the `LensView` component, use npm or yarn:
 
 ```bash
-npm install lens-view
+npm install react-lensview
 ```
 
 or
 
 ```bash
-yarn add lens-view
+yarn add react-lensview
 ```
 
 ## Usage
 
 Here’s a simple example of how to use the `LensView` component in your React application:
 
-### JSX Example
+### TypeScript Example (.ts or .tsx)
 
+- Step 1: Import Packages
 ```
+// Import React and required hooks
 import React, { useState } from 'react';
+
+// Import LensView package
 import LensView from 'lens-view';
-
-const App = () => {
-  const [isImageOpen, setIsImageOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const imageArray = [
-    {
-      src: 'image-1.jpg',
-      alt: 'Image 1',
-    },
-    {
-      src: 'image-2.png',
-      alt: 'Image 2',
-    },
-    {
-      src: 'image-3.jpg',
-      alt: 'Image 3',
-    },
-  ];
-
-  const openImage = (index) => {
-    setCurrentImageIndex(index);
-    setIsImageOpen(true);
-  };
-
-  const closeImage = () => {
-    setIsImageOpen(false);
-  };
-
-  return (
-    <LensView
-      images={imageArray}
-      isImageOpen={isImageOpen}
-      currentImageIndex={currentImageIndex}
-      openImage={openImage}
-      closeImage={closeImage}
-      controls={{ enableZoom: true, enableDrag: true }}
-    >
-      <div className="thumbnails">
-        {imageArray.map((image, index) => (
-          <div className="thumbnail" key={index} onClick={() => openImage(index)}>
-            <img src={image.src} alt={image.alt} className="thumbnail-image" />
-          </div>
-        ))}
-      </div>
-    </LensView>
-  );
-};
-
-export default App;
 ```
 
-### TypeScript Example (TSX)
+- Step 2: Create the Image Array
+```
+// Image array with src, alt and other attributes
+const imageArray = [
+  { src: 'image-1.jpg', alt: 'Image 1', name: "name-1" },
+  { src: 'image-2.jpg', alt: 'Image 2', name: "name-2" },
+  { src: 'image-3.jpg', alt: 'Image 3', name: "name-3" },
+];
+```
+
+- Step 3: Create the Lensview Component
 
 ```
-import React, { useState } from 'react';
-import LensView from 'lens-view';
-
 const App: React.FC = () => {
+  // State to track if the image is open
   const [isImageOpen, setIsImageOpen] = useState<boolean>(false);
+
+  // State to track which image is currently selected
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
-   const imageArray = [
-    {
-      src: 'image-1.jpg',
-      alt: 'Image 1',
-    },
-    {
-      src: 'image-2.png',
-      alt: 'Image 2',
-    },
-    {
-      src: 'image-3.jpg',
-      alt: 'Image 3',
-    },
-  ];
-
+  // Function to open a specific image by index
   const openImage = (index: number) => {
-    setCurrentImageIndex(index);
-    setIsImageOpen(true);
+    setCurrentImageIndex(index); // Set the current image to the clicked index
+    setIsImageOpen(true);        // Open the image
   };
 
+  // Function to close the image
   const closeImage = () => {
-    setIsImageOpen(false);
+    setIsImageOpen(false);       // Close the image
   };
 
   return (
+    // Pass necessary props to LensView
     <LensView
-      images={imageArray}
-      isImageOpen={isImageOpen}
-      currentImageIndex={currentImageIndex}
-      openImage={openImage}
-      closeImage={closeImage}
-      controls={{ enableZoom: true, enableDrag: true }}
+      images={imageArray}                  // Image array to display
+      isImageOpen={isImageOpen}            // Modal open state
+      currentImageIndex={currentImageIndex} // Track the currently active image
+      openImage={openImage}                // Function to open images
+      closeImage={closeImage}              // Function to close images
+      controls={{ enableZoom: true, enableDrag: true }} // Enable zoom and drag controls
     >
-      <div className="thumbnails">
+      {/* Render the each image */}
+      <div>
         {imageArray.map((image, index) => (
-          <div className="thumbnail" key={index} onClick={() => openImage(index)}>
-            <img src={image.src} alt={image.alt} className="thumbnail-image" />
+          <div key={index} onClick={() => openImage(index)}>
+            <img src={image.src} alt={image.alt} />
           </div>
         ))}
       </div>
