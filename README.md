@@ -35,7 +35,7 @@ Here’s a simple example of how to use the `LensView` component in your React a
 import React, { useState } from 'react';
 
 // Import LensView package
-import LensView from 'lens-view';
+import LensView from 'react-lensview';
 ```
 
 - Step 2: Create the Image Array
