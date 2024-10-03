@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./LensView.css";
+import { createPortal } from "react-dom";
 
 interface IControls {
   enableZoom?: boolean;
@@ -87,75 +88,77 @@ const LensView = ({
     }
   };
 
+  const imageContent = (
+    <div
+      className="modal-backdrop"
+      onWheel={zoomWithScroll}
+      onDoubleClick={resetZoom}
+    >
+      <div className="modal">
+        <div
+          className="modal-image-container"
+          style={{
+            transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
+            cursor: isDragging ? "grabbing" : "grab",
+          }}
+          onMouseDown={handleMouseDown}
+        >
+          <img
+            src={images[currentImageIndex].src}
+            alt={images[currentImageIndex].alt}
+            className="modal-image"
+          />
+        </div>
+      </div>
+
+      <div className="">
+        <button className="preview-button" onClick={showPrevImage}>
+          {/* Left arrow SVG icon */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="white"
+          >
+            <path d="M15 18l-6-6 6-6v12z" />
+          </svg>
+        </button>
+        <button className="next-button" onClick={showNextImage}>
+          {/* Right arrow SVG icon */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="white"
+          >
+            <path d="M9 18l6-6-6-6v12z" />
+          </svg>
+        </button>
+        {/* Close SVG Icon */}
+        <button className="close-button" onClick={handleClose}>
+          {/** Close icon */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            strokeWidth="2"
+          >
+            <path d="M18.36 6.64L17 5l-6 6-6-6-1.36 1.36L10.64 12l-6 6L5 19l6-6 6 6 1.36-1.36-6-6 6-6z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <>
       <div>{children}</div>
-      {isImageOpen && (
-        <div
-          className="modal-backdrop"
-          onWheel={zoomWithScroll}
-          onDoubleClick={resetZoom}
-        >
-          <div className="modal">
-            <div
-              className="modal-image-container"
-              style={{
-                transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
-                cursor: isDragging ? "grabbing" : "grab",
-              }}
-              onMouseDown={handleMouseDown}
-            >
-              <img
-                src={images[currentImageIndex].src}
-                alt={images[currentImageIndex].alt}
-                className="modal-image"
-              />
-            </div>
-          </div>
-
-          <div className="">
-            <button className="preview-button" onClick={showPrevImage}>
-              {/* Left arrow SVG icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="white"
-              >
-                <path d="M15 18l-6-6 6-6v12z" />
-              </svg>
-            </button>
-            <button className="next-button" onClick={showNextImage}>
-              {/* Right arrow SVG icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="white"
-              >
-                <path d="M9 18l6-6-6-6v12z" />
-              </svg>
-            </button>
-            {/* Close SVG Icon */}
-            <button className="close-button" onClick={handleClose}>
-              {/** Close icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="white"
-                strokeWidth="2"
-              >
-                <path d="M18.36 6.64L17 5l-6 6-6-6-1.36 1.36L10.64 12l-6 6L5 19l6-6 6 6 1.36-1.36-6-6 6-6z" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      )}
+      {isImageOpen && createPortal(imageContent, document.body)}
     </>
   );
 };

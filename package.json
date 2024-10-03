@@ -1,6 +1,6 @@
 {
   "name": "react-lensview",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -34,6 +34,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.0",
     "@types/react": "^18.3.10",
+    "@types/react-dom": "^18.3.0",
     "react": "^18.3.1",
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
@@ -41,6 +42,7 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
+    "react-dom": "^18.3.1",
     "rollup": "^4.23.0",
     "rollup-plugin-postcss": "^4.0.2"
   }

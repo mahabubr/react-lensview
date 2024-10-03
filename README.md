@@ -33,7 +33,9 @@ Here’s a simple example of how to use the `LensView` component in your React a
 ```
 // Import React and required hooks
 import React, { useState } from 'react';
+```
 
+```
 // Import LensView package
 import LensView from 'react-lensview';
 ```
@@ -52,41 +54,32 @@ const imageArray = [
 
 ```
 const App: React.FC = () => {
-  // State to track if the image is open
   const [isImageOpen, setIsImageOpen] = useState<boolean>(false);
-
-  // State to track which image is currently selected
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
-  // Function to open a specific image by index
   const openImage = (index: number) => {
-    setCurrentImageIndex(index); // Set the current image to the clicked index
-    setIsImageOpen(true);        // Open the image
+    setCurrentImageIndex(index);
+    setIsImageOpen(true); 
   };
 
-  // Function to close the image
   const closeImage = () => {
-    setIsImageOpen(false);       // Close the image
+    setIsImageOpen(false);
   };
 
   return (
-    // Pass necessary props to LensView
     <LensView
-      images={imageArray}                  // Image array to display
-      isImageOpen={isImageOpen}            // Modal open state
-      currentImageIndex={currentImageIndex} // Track the currently active image
-      openImage={openImage}                // Function to open images
-      closeImage={closeImage}              // Function to close images
-      controls={{ enableZoom: true, enableDrag: true }} // Enable zoom and drag controls
+      images={imageArray}
+      isImageOpen={isImageOpen} 
+      currentImageIndex={currentImageIndex}
+      openImage={openImage}  
+      closeImage={closeImage}   
+      controls={{ enableZoom: true, enableDrag: true }} 
     >
-      {/* Render the each image */}
-      <div>
-        {imageArray.map((image, index) => (
-          <div key={index} onClick={() => openImage(index)}>
-            <img src={image.src} alt={image.alt} />
-          </div>
-        ))}
-      </div>
+      {imageArray.map((image, index) => (
+        <div key={index} onClick={() => openImage(index)}>
+          <img src={image.src} alt={image.alt} />
+        </div>
+      ))}
     </LensView>
   );
 };
